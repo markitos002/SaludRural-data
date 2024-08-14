@@ -12,10 +12,12 @@ palabras_clave = ['Physician']
 patron = re.compile('|'.join(palabras_clave), re.IGNORECASE)
 
 # Filtrar las referencias cuyos resúmenes contienen alguna de las palabras clave
-df_filtrado = df[df['Abstract'].apply(lambda x: bool(patron.findall(str(x))))]
+df_filtrado = df[df['Abstract'].apply(lambda x: bool(patron.search(str(x))))]
+# df_filtrado = df[df['Abstract'].apply(lambda x: bool(patron.findall(str(x))))] tambien puede funcionar con findall en lugar de search con la misma expresion regular sin embargo, 
+# findall devuelve una lista de todas las ocurrencias de la palabra clave en el resumen
 
 # Guardar las referencias filtradas en un nuevo archivo CSV
-df_filtrado.to_csv('referencias_physic.csv', index=False)
+df_filtrado.to_csv('referencias_physic.csv', index=True)
 
 """
 print("Proceso completado. Se han guardado las referencias filtradas en 'referencias_filtradas.csv'.")
